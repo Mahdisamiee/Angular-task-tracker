@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Event } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TasksService } from '../../services/tasks.service'
 import { Task } from '../../Task';
@@ -20,11 +21,12 @@ export class TasksComponent implements OnInit {
   }
   
   deleteTask(task:Task){
-    console.log("please!!!", task);
-    // delete specific task
+    // delete specific task & update list
     this.tasksService.deleteTask(task).subscribe(()=>(this.tasks = this.tasks.filter((t)=> t.id !== task.id)))
-    // refresh list
-    // this.tasksService.getTask().subscribe((tasks) => this.tasks = tasks);
+  }
+
+  addTask(task:Task){
+    this.tasksService.addTask(task).subscribe((task)=>(this.tasks.push(task)))
   }
 
   toggleReminder(task:Task){
